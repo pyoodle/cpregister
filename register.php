@@ -169,4 +169,15 @@
     }
   }
   
+  # Simply order everything in what to check
+  $register = new register();
+  $register->checkUsername();
+  $register->checkColour();
+  $register->checkPassword();
+  $register->checkEmail();
+  $register->checkTerms();
+  $register->checkRules();
+  # Now display the errors or success
+  $register->displaySuccess();
+  
 ?>
