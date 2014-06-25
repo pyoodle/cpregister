@@ -45,14 +45,15 @@
       'terms' => '1|'
     );
     
+    # I made a small mistake here, but I fixed it here too
     # Error messages for each section
     private $errArray = array(
-      'undefined' => '1|',
-      'password' => '1|',
-      'email' => '1|',
-      'name' => '1|',
-      'rules' => '1|',
-      'terms' => '1|'
+      'undefined' => '|',
+      'password' => '|',
+      'email' => '|',
+      'name' => '|',
+      'rules' => '|',
+      'terms' => '|'
     );
     
     # I made a small mistake here, fixed it anyway
