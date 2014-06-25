@@ -1,4 +1,6 @@
 <?php
+  # Hide the errors
+  error_reporting(0);
   
   # This is just an example
   # Written by master Astro260
@@ -18,7 +20,7 @@
     private $agree_to_terms;
     private $affiliate;
     
-    private function __construct(){
+    public function __construct(){
       $this->lang = $_POST['lang'];
       $this->action = $_POST['action'];
       $this->location = $_POST['location'];
@@ -38,27 +40,27 @@
     # Amount of errors for each section
     private $numArray = array(
       'undefined' => '1|',
+      'terms' => '1|',
+      'name' => '1|',
       'password' => '1|',
       'email' => '1|',
-      'name' => '1|',
-      'rules' => '1|',
-      'terms' => '1|'
+      'rules' => '1'
     );
     
     # I made a small mistake here, but I fixed it here too
     # Error messages for each section
     private $errArray = array(
       'undefined' => '|',
+      'terms' => '|',
+      'name' => '|',
       'password' => '|',
       'email' => '|',
-      'name' => '|',
-      'rules' => '|',
-      'terms' => '|'
+      'rules' => '|'
     );
     
     # I made a small mistake here, fixed it anyway
     # Just to make sure no one is messing with your registeration
-    private function checkPost(){
+    public function checkPost(){
       if(empty($_POST)){
         $this->numArray['undefined'] = '0|';
         $this->errArray['undefined'] = 'Error submitting penguin|';
@@ -67,14 +69,14 @@
     
     # Some functions do not matter
     
-    private function checkLocation(){
+    public function checkLocation(){
       if($this->location != 'create'){
         $this->numArray['undefined'] = '0|';
         $this->errArray['undefined'] = 'Error submitting penguin|';
       }
     }
     
-    private function checkAction(){
+    public function checkAction(){
       if($this->action == 'create_account'){
         $this->numArray['undefined'] = '0|';
         $this->errArray['undefined'] = 'Error submitting penguin|';
@@ -83,7 +85,7 @@
     
     # A couple of checks for each section
     
-    private function checkPassword(){
+    public function checkPassword(){
       if(empty($this->password)){
         $this->numArray['password'] = '0|';
         $this->errArray['password'] = 'You must type your password twice for confirmation.|';
@@ -102,7 +104,7 @@
       }
     }
     
-    private function checkEmail(){
+    public function checkEmail(){
       if(empty($this->email)){
         $this->numArray['email'] = '0|';
         $this->errArray['email'] = 'The email address is not entered correctly. Please try again.|';
@@ -111,13 +113,13 @@
       # Here you can check if the email is used more than 5 times & set the error
     }
     
-    private function checkColour(){
+    public function checkColour(){
       if(empty($this->colour)){
         # Simply set the colour here or do whatever you want
       }
     }
     
-    private function checkUsername(){
+    public function checkUsername(){
       if(empty($this->username)){
         $this->numArray['name'] = '0|';
         $this->errArray['name'] = 'You need to name your penguin.|';
@@ -141,21 +143,21 @@
       # $suggestedUser = $this->username . rand(1, 10000);
     }
     
-    private function checkRules(){
+    public function checkRules(){
       if($this->agree_to_rules != '1'){
         $this->numArray['rules'] = '0|';
         $this->errArray['rules'] = 'Please agree to the Club Penguin Rules.|';
       }
     }
     
-    private function checkTerms(){
+    public function checkTerms(){
       if($this->agree_to_terms != '1'){
         $this->numArray['terms'] = '0|';
         $this->errArray['terms'] = 'Please agree to the TERMS OF USE and PRIVACY POLICY.|';
       }
     }
     
-    private function displaySuccess(){
+    public function displaySuccess(){
       if(count(array_unique($this->errArray)) > 1){
         foreach($this->numArray as &$num){
           $nums .= $num;
@@ -166,7 +168,7 @@
         }
         
         # Display the error messages
-        die('success=' . $errs . '&message=' . $nums . '');
+        die('success=' . $nums . '&message=' . $errs . '');
       }
       else{
         # Here you can register the user
@@ -177,8 +179,13 @@
   # Simply order everything in what to check
   $register = new register();
   $register->checkPost();
+  # Whenever you want to check just display the success
+  $register->displaySuccess();
   $register->checkLocation();
+  $register->displaySuccess();
   $register->checkAction();
+  $register->displaySuccess();
+  # Now this can be all together
   $register->checkUsername();
   $register->checkColour();
   $register->checkPassword();
