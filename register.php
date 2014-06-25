@@ -55,11 +55,12 @@
       'terms' => '1|'
     );
     
+    # I made a small mistake here, fixed it anyway
     # Just to make sure no one is messing with your registeration
     private function checkPost(){
       if(empty($_POST)){
-        $this->numArray['unknown'] = '0|';
-        $this->errArray['unknown'] = 'Error submitting penguin|';
+        $this->numArray['undefined'] = '0|';
+        $this->errArray['undefined'] = 'Error submitting penguin|';
       }
     }
     
@@ -67,15 +68,15 @@
     
     private function checkLocation(){
       if($this->location != 'create'){
-        $this->numArray['unknown'] = '0|';
-        $this->errArray['unknown'] = 'Error submitting penguin|';
+        $this->numArray['undefined'] = '0|';
+        $this->errArray['undefined'] = 'Error submitting penguin|';
       }
     }
     
     private function checkAction(){
       if($this->action == 'create_account'){
-        $this->numArray['unknown'] = '0|';
-        $this->errArray['unknown'] = 'Error submitting penguin|';
+        $this->numArray['undefined'] = '0|';
+        $this->errArray['undefined'] = 'Error submitting penguin|';
       }
     }
     
