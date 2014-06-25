@@ -65,7 +65,7 @@
     # Some functions do not matter
     
     private function checkLocation(){
-      if($this->location !== 'create'){
+      if($this->location != 'create'){
         die('Something went wrong');
       }
     }
@@ -134,6 +134,38 @@
       # Use rand() to generate a random username like Club Penguin does
       # Exmaple:
       # $suggestedUser = $this->username . rand(1, 10000);
+    }
+    
+    private function checkRules(){
+      if($this->agree_to_rules != '1'){
+        $this->numArray['rules'] = '0|';
+        $this->errArray['rules'] = 'Please agree to the Club Penguin Rules.|';
+      }
+    }
+    
+    private function checkTerms(){
+      if($this->agree_to_terms != '1'){
+        $this->numArray['terms'] = '0|';
+        $this->errArray['terms'] = 'Please agree to the TERMS OF USE and PRIVACY POLICY.|';
+      }
+    }
+    
+    private function displaySuccess(){
+      if(count(array_unique($this->errArray)) > 1){
+        foreach($this->numArray as &$num){
+          $nums .= $num;
+        }
+        
+        foreach($this->errArray as &$err){
+          $errs .= $err;
+        }
+        
+        # Display the error messages
+        die('success=' . $errs . '&message=' . $nums . '');
+      }
+      else{
+        # Here you can register the user
+      }
     }
   }
   
