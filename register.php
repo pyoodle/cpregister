@@ -38,27 +38,28 @@
     # Amount of errors for each section
     private $numArray = array(
       'undefined' => '1|',
-      'terms' => '1|',
-      'name' => '1|',
       'password' => '1|',
       'email' => '1|',
-      'rules' => '1|'
+      'name' => '1|',
+      'rules' => '1|',
+      'terms' => '1|'
     );
     
     # Error messages for each section
     private $errArray = array(
-      'undefined' => '|',
-      'terms' => '|',
-      'name' => '|',
-      'password' => '|',
-      'email' => '|',
-      'rules' => '|'
+      'undefined' => '1|',
+      'password' => '1|',
+      'email' => '1|',
+      'name' => '1|',
+      'rules' => '1|',
+      'terms' => '1|'
     );
     
     # Just to make sure no one is messing with your registeration
     private function checkPost(){
       if(empty($_POST)){
-        die('Something went wrong.');
+        $this->numArray['unknown'] = '0|';
+        $this->errArray['unknown'] = 'Error submitting penguin|';
       }
     }
     
@@ -66,13 +67,15 @@
     
     private function checkLocation(){
       if($this->location != 'create'){
-        die('Something went wrong');
+        $this->numArray['unknown'] = '0|';
+        $this->errArray['unknown'] = 'Error submitting penguin|';
       }
     }
     
     private function checkAction(){
       if($this->action == 'create_account'){
-        die('Something went wrong');
+        $this->numArray['unknown'] = '0|';
+        $this->errArray['unknown'] = 'Error submitting penguin|';
       }
     }
     
@@ -171,6 +174,9 @@
   
   # Simply order everything in what to check
   $register = new register();
+  $register->checkPost();
+  $register->checkLocation();
+  $register->checkAction();
   $register->checkUsername();
   $register->checkColour();
   $register->checkPassword();
