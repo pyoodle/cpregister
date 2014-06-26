@@ -141,6 +141,25 @@
         return;
       }
       
+      /* OPTIONAL - Recommended
+      # Club Penguin does not do this
+      # http://code.google.com/p/php-smtp-email-validation/
+      # This is optional, uncommenting this means more validation == more time
+      require_once('smtp_validateEmail.class.php');
+      # An example address
+      $sender = 'example@github.com';
+      $SMTP_Validator = new SMTP_validateEmail();
+      $SMTP_Validator->debug = true;
+      $results = $SMTP_Validator->validate(array($this->email), $sender);
+      
+      if(empty($results[$this-email])){
+        $this->numArray['email'] = '0|';
+        # Using " because of "can't"
+        $this->errArray['email'] = "Oops. This email address is not valid. For more info, please contact us.|";
+        return;
+      }
+      */
+      
       # Here you can check if the email is used more than 5 times & set the error
     }
     
