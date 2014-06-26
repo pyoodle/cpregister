@@ -64,6 +64,7 @@
       if(empty($_POST)){
         $this->numArray['undefined'] = '0|';
         $this->errArray['undefined'] = 'Error submitting penguin|';
+        return;
       }
     }
     
@@ -73,6 +74,7 @@
       if($this->location != 'create'){
         $this->numArray['undefined'] = '0|';
         $this->errArray['undefined'] = 'Error submitting penguin|';
+        return;
       }
     }
     
@@ -80,6 +82,7 @@
       if($this->action == 'create_account'){
         $this->numArray['undefined'] = '0|';
         $this->errArray['undefined'] = 'Error submitting penguin|';
+        return;
       }
     }
     
@@ -89,18 +92,25 @@
       if(empty($this->password)){
         $this->numArray['password'] = '0|';
         $this->errArray['password'] = 'You must type your password twice for confirmation.|';
+        return;
       }
-      elseif(empty($this->password_confirm)){
+      
+      if(empty($this->password_confirm)){
         $this->numArray['password'] = '0|';
         $this->errArray['password'] = 'You must type your password twice for confirmation.|';
+        return;
       }
-      elseif(empty($this->password) && empty($this->password_confirm)){
+      
+      if(empty($this->password) && empty($this->password_confirm)){
         $this->numArray['password'] = '0|';
         $this->errArray['password'] = 'You must type your password twice for confirmation.|';
+        return;
       }
-      elseif(strlen($this->password) > 50 || strlen($this->password) < 6 && strlen($this->password_confirm) > 50 || strlen($this->password_confirm) < 6){
+      
+      if(strlen($this->password) > 50 || strlen($this->password) < 6 && strlen($this->password_confirm) > 50 || strlen($this->password_confirm) < 6){
         $this->numArray['password'] = '0|';
         $this->errArray['password'] = 'Please enter 6 or more letters or numbers.|';
+        return;
       }
     }
     
@@ -108,6 +118,27 @@
       if(empty($this->email)){
         $this->numArray['email'] = '0|';
         $this->errArray['email'] = 'The email address is not entered correctly. Please try again.|';
+        return;
+      }
+      
+      if(!filter_var($this->email, FILTER_VALIDATE_EMAIL)){
+        $this->numArray['email'] = '0|';
+        $this->errArray['email'] = 'Please enter a correct email address.|';
+        return;
+      }
+      
+      # More validation, this is optional
+      # A list of not allowed domains
+      $domains = file_get_contents('emails.txt');
+      # Make sure each domain is spaced " "
+      $domains = explode(' ', $domains);
+      $domain = array_pop(explode('@', $this->email));
+      
+      if(in_array($domain, $domains)){
+        $this->numArray['email'] = '0|';
+        # Using " because of "can't"
+        $this->errArray['email'] = "Oops. This domain name can't be used right now. For more info, please contact us.|";
+        return;
       }
       
       # Here you can check if the email is used more than 5 times & set the error
@@ -116,6 +147,8 @@
     public function checkColour(){
       if(empty($this->colour)){
         # Simply set the colour here or do whatever you want
+        $this->colour = 15;
+        return;
       }
     }
     
@@ -123,18 +156,25 @@
       if(empty($this->username)){
         $this->numArray['name'] = '0|';
         $this->errArray['name'] = 'You need to name your penguin.|';
+        return;
       }
-      elseif(preg_match('/\d{6}$/', $this->username)){
+      
+      if(preg_match('/\d{6}$/', $this->username)){
         $this->numArray['name'] = '0|';
         $this->errArray['name'] = 'Penguin names can have up to 5 numbers.|';
+        return;
       }
-      elseif(!preg_match('/[a-z]/i', $this->username)){
+      
+      if(!preg_match('/[a-z]/i', $this->username)){
         $this->numArray['name'] = '0|';
         $this->errArray['name'] = 'Penguin names must have at least one letter.|';
+        return;
       }
-      elseif(strlen($this->username) > 12 || strlen($this->username) < 4){
+      
+      if(strlen($this->username) > 12 || strlen($this->username) < 4){
         $this->numArray['name'] = '0|';
         $this->errArray['name'] = 'Penguin name must be at least 4 characters long.|';
+        return;
       }
       
       # Here you can check if the penguin name is already taken
@@ -147,6 +187,7 @@
       if($this->agree_to_rules != '1'){
         $this->numArray['rules'] = '0|';
         $this->errArray['rules'] = 'Please agree to the Club Penguin Rules.|';
+        return;
       }
     }
     
@@ -154,6 +195,7 @@
       if($this->agree_to_terms != '1'){
         $this->numArray['terms'] = '0|';
         $this->errArray['terms'] = 'Please agree to the TERMS OF USE and PRIVACY POLICY.|';
+        return;
       }
     }
     
