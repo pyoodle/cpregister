@@ -58,6 +58,21 @@
       'rules' => '|'
     );
     
+    /* Tor Check - Recommended
+    # Club Penguin doesn't do this
+    public function checkTor(){
+      $hostname = gethostbyaddr($_SERVER['REMOTE_ADDR']);
+      # Search for 'tor' in the hostname
+      $tor = stripos($hostname, 'tor');
+      
+      if($tor == true){
+        $this->numArray['undefined'] = '0|';
+        $this->errArray['undefined'] = 'Error submitting penguin|';
+        return
+      }
+    }
+    */
+    
     # I made a small mistake here, fixed it anyway
     # Just to make sure no one is messing with your registeration
     public function checkPost(){
@@ -154,7 +169,6 @@
       
       if(empty($results[$this-email])){
         $this->numArray['email'] = '0|';
-        # Using " because of "can't"
         $this->errArray['email'] = "Oops. This email address is not valid. For more info, please contact us.|";
         return;
       }
@@ -239,6 +253,7 @@
   
   # Simply order everything in what to check
   $register = new register();
+  # $register->checkTor();
   $register->checkPost();
   # Whenever you want to check just display the success
   $register->displaySuccess();
