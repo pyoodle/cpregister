@@ -254,6 +254,7 @@
   # Simply order everything in what to check
   $register = new register();
   # $register->checkTor();
+  # $register->displaySuccess();
   $register->checkPost();
   # Whenever you want to check just display the success
   $register->displaySuccess();
